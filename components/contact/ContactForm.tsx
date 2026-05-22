@@ -7,24 +7,19 @@ import { Button } from '@/components/ui/Button'
 import type { ContactFormData } from '@/lib/types'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
-
 type FormErrors = Partial<Record<keyof ContactFormData, string>>
 
 function validate(data: ContactFormData): FormErrors {
   const errors: FormErrors = {}
   if (!data.name.trim()) errors.name = 'Name is required.'
   else if (data.name.length > 100) errors.name = 'Name must be under 100 characters.'
-
   if (!data.email.trim()) errors.email = 'Email is required.'
   else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.email = 'Enter a valid email.'
-
   if (!data.subject.trim()) errors.subject = 'Subject is required.'
   else if (data.subject.length > 200) errors.subject = 'Subject must be under 200 characters.'
-
   if (!data.message.trim()) errors.message = 'Message is required.'
   else if (data.message.length < 10) errors.message = 'Message must be at least 10 characters.'
   else if (data.message.length > 2000) errors.message = 'Message must be under 2000 characters.'
-
   return errors
 }
 
@@ -45,13 +40,8 @@ export function ContactForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-
     const validationErrors = validate(form)
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors)
-      return
-    }
-
+    if (Object.keys(validationErrors).length > 0) { setErrors(validationErrors); return }
     setStatus('loading')
     try {
       const res = await fetch('/api/contact', {
@@ -59,12 +49,8 @@ export function ContactForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
-      if (res.ok) {
-        setStatus('success')
-        setForm(empty)
-      } else {
-        setStatus('error')
-      }
+      setStatus(res.ok ? 'success' : 'error')
+      if (res.ok) setForm(empty)
     } catch {
       setStatus('error')
     }
@@ -72,12 +58,15 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <div className="text-center py-16">
-        <div className="w-16 h-16 bg-green-100 dark:bg-green-950/50 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle className="text-green-600 dark:text-green-400" size={32} />
+      <div className="text-center py-14">
+        {/* Success uses accent-teal */}
+        <div className="w-14 h-14 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckCircle className="text-success" size={28} />
         </div>
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">Message sent!</h3>
-        <p className="text-gray-500 dark:text-gray-400 mb-6">
+        <h3 className="font-display text-display-sm font-[500] text-ink dark:text-on-dark mb-2">
+          Message sent!
+        </h3>
+        <p className="text-body-md text-body-text dark:text-on-dark-soft mb-6">
           Thanks for reaching out. I&apos;ll get back to you soon.
         </p>
         <Button variant="secondary" onClick={() => setStatus('idle')}>
@@ -90,63 +79,26 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-5">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <FormField
-          label="Name"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          error={errors.name}
-          placeholder="Your name"
-          required
-        />
-        <FormField
-          label="Email"
-          name="email"
-          type="email"
-          value={form.email}
-          onChange={handleChange}
-          error={errors.email}
-          placeholder="you@example.com"
-          required
-        />
+        <FormField label="Name" name="name" value={form.name} onChange={handleChange}
+          error={errors.name} placeholder="Your name" required />
+        <FormField label="Email" name="email" type="email" value={form.email}
+          onChange={handleChange} error={errors.email} placeholder="you@example.com" required />
       </div>
-      <FormField
-        label="Subject"
-        name="subject"
-        value={form.subject}
-        onChange={handleChange}
-        error={errors.subject}
-        placeholder="What's this about?"
-        required
-      />
-      <FormField
-        label="Message"
-        name="message"
-        as="textarea"
-        value={form.message}
-        onChange={handleChange}
-        error={errors.message}
-        placeholder="Tell me about your project or just say hi..."
-        rows={6}
-        required
-      />
+      <FormField label="Subject" name="subject" value={form.subject} onChange={handleChange}
+        error={errors.subject} placeholder="What's this about?" required />
+      <FormField label="Message" name="message" as="textarea" value={form.message}
+        onChange={handleChange} error={errors.message}
+        placeholder="Tell me about your project or just say hi…" rows={6} required />
 
       {status === 'error' && (
-        <div className="flex items-center gap-2 p-4 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 text-sm">
-          <AlertCircle size={16} className="flex-shrink-0" />
+        <div className="flex items-center gap-2 p-4 rounded-lg bg-error/8 border border-error/20 text-error text-body-sm">
+          <AlertCircle size={15} className="flex-shrink-0" />
           Something went wrong. Please try again or email me directly.
         </div>
       )}
 
       <Button type="submit" size="lg" className="w-full" disabled={status === 'loading'}>
-        {status === 'loading' ? (
-          'Sending…'
-        ) : (
-          <>
-            Send message
-            <Send size={16} />
-          </>
-        )}
+        {status === 'loading' ? 'Sending…' : (<>Send message <Send size={14} /></>)}
       </Button>
     </form>
   )

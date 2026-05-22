@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { MapPin, GraduationCap, ArrowRight } from 'lucide-react'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
 import { SectionHeading } from '@/components/ui/SectionHeading'
-import { Button } from '@/components/ui/Button'
 
 export const metadata: Metadata = {
   title: 'About',
@@ -34,117 +33,127 @@ const techStack = [
 
 export default function AboutPage() {
   return (
-    <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-      {/* Hero */}
-      <AnimatedSection>
-        <div className="mb-16">
-          <p className="text-indigo-600 dark:text-indigo-400 font-medium text-sm mb-4">About</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-6">
-            I build things for the web
-          </h1>
-          <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-8">
-            <MapPin size={14} />
-            <span>Based in Vancouver, BC</span>
-          </div>
-          <div className="space-y-4 text-lg text-gray-600 dark:text-gray-400 leading-relaxed max-w-2xl">
-            <p>
-              Hi, I&apos;m Nathanael — a full-stack developer and designer who loves building digital
-              products that are both functional and beautiful. I&apos;m currently studying Computer
-              Science at UBC, where I&apos;ve developed a strong foundation in software engineering
-              and system design.
-            </p>
-            <p>
-              My work sits at the intersection of engineering and design. I care about the whole
-              experience — from the architecture decisions that make systems reliable to the
-              micro-interactions that make interfaces feel alive.
-            </p>
-            <p>
-              When I&apos;m not shipping code, you&apos;ll find me exploring typography, reading
-              about design systems, or tinkering with new frameworks.
-            </p>
-          </div>
-        </div>
-      </AnimatedSection>
+    <main className="bg-canvas dark:bg-surface-dark min-h-screen">
+      <div className="max-w-[800px] mx-auto px-6 lg:px-8 py-16 lg:py-24">
 
-      {/* Tech stack */}
-      <AnimatedSection delay={0.1}>
-        <section className="mb-16">
-          <SectionHeading title="Tech Stack" subtitle="Tools I reach for most often" />
-          <div className="flex flex-wrap gap-2">
-            {techStack.map((tech) => (
-              <span
-                key={tech}
-                className="px-3 py-1.5 rounded-lg text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        </section>
-      </AnimatedSection>
-
-      {/* Experience */}
-      <AnimatedSection delay={0.2}>
-        <section className="mb-16">
-          <SectionHeading title="Experience" />
-          <div className="space-y-8">
-            {experience.map(({ role, company, period, description }) => (
-              <div
-                key={role}
-                className="relative pl-6 before:absolute before:left-0 before:top-2 before:w-2 before:h-2 before:rounded-full before:bg-indigo-600 before:dark:bg-indigo-400"
-              >
-                <div className="flex flex-wrap items-baseline gap-x-3 mb-1">
-                  <h3 className="font-semibold text-gray-900 dark:text-white">{role}</h3>
-                  <span className="text-indigo-600 dark:text-indigo-400 text-sm font-medium">
-                    {company}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-400 dark:text-gray-600 mb-2">{period}</p>
-                <p className="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                  {description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      </AnimatedSection>
-
-      {/* Education */}
-      <AnimatedSection delay={0.3}>
-        <section className="mb-16">
-          <SectionHeading title="Education" />
-          <div className="flex items-start gap-4 p-6 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900">
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 flex items-center justify-center text-indigo-600 dark:text-indigo-400 flex-shrink-0">
-              <GraduationCap size={20} />
+        {/* Hero */}
+        <AnimatedSection>
+          <div className="mb-16">
+            <span className="text-caption-xs font-[500] uppercase tracking-[0.1em] text-primary mb-5 block">
+              About
+            </span>
+            {/* display-lg serif */}
+            <h1 className="font-display text-display-lg font-[500] text-ink dark:text-on-dark mb-5">
+              I build things<br />for the web
+            </h1>
+            <div className="flex items-center gap-2 text-body-sm text-muted dark:text-on-dark-soft mb-8">
+              <MapPin size={13} />
+              <span>Based in Vancouver, BC</span>
             </div>
-            <div>
-              <h3 className="font-semibold text-gray-900 dark:text-white">
-                Bachelor of Science — Computer Science
-              </h3>
-              <p className="text-indigo-600 dark:text-indigo-400 text-sm font-medium mt-0.5">
-                University of British Columbia
+            <div className="space-y-4 text-body-md text-body-text dark:text-on-dark-soft leading-relaxed max-w-2xl">
+              <p>
+                Hi, I&apos;m Nathanael — a full-stack developer and designer who loves building
+                digital products that are both functional and beautiful. I&apos;m currently
+                studying Computer Science at UBC, where I&apos;ve developed a strong foundation
+                in software engineering and system design.
               </p>
-              <p className="text-sm text-gray-400 dark:text-gray-600 mt-0.5">2022 – Present</p>
+              <p>
+                My work sits at the intersection of engineering and design. I care about the
+                whole experience — from architecture decisions that make systems reliable to the
+                micro-interactions that make interfaces feel alive.
+              </p>
+              <p>
+                When I&apos;m not shipping code, you&apos;ll find me exploring typography,
+                reading about design systems, or tinkering with new frameworks.
+              </p>
             </div>
           </div>
-        </section>
-      </AnimatedSection>
+        </AnimatedSection>
 
-      {/* CTA */}
-      <AnimatedSection delay={0.4}>
-        <div className="p-8 rounded-2xl bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-            Want to work together?
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            I&apos;m open to freelance projects and full-time opportunities.
-          </p>
-          <Button href="/contact" size="lg">
-            Get in touch
-            <ArrowRight size={16} />
-          </Button>
-        </div>
-      </AnimatedSection>
+        {/* Tech stack */}
+        <AnimatedSection delay={0.08}>
+          <section className="mb-16">
+            <SectionHeading title="Tech Stack" subtitle="Tools I reach for most often" />
+            {/* badge-pill row */}
+            <div className="flex flex-wrap gap-2">
+              {techStack.map((tech) => (
+                <span
+                  key={tech}
+                  className="px-3 py-1 rounded-full text-caption font-[500] bg-surface-card dark:bg-surface-dark-elevated text-ink dark:text-on-dark border border-hairline dark:border-surface-dark-soft"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </section>
+        </AnimatedSection>
+
+        {/* Experience — feature-card per entry */}
+        <AnimatedSection delay={0.12}>
+          <section className="mb-16">
+            <SectionHeading title="Experience" />
+            <div className="space-y-5">
+              {experience.map(({ role, company, period, description }) => (
+                <div
+                  key={role}
+                  className="bg-surface-card dark:bg-surface-dark-elevated rounded-xl p-8 border border-hairline dark:border-surface-dark-soft"
+                >
+                  <div className="flex flex-wrap items-baseline gap-x-3 mb-1">
+                    <h3 className="text-title-sm font-[500] text-ink dark:text-on-dark">{role}</h3>
+                    {/* text-link in primary per DESIGN.md */}
+                    <span className="text-body-sm text-primary font-[500]">{company}</span>
+                  </div>
+                  <p className="text-caption text-muted dark:text-on-dark-soft mb-3">{period}</p>
+                  <p className="text-body-md text-body-text dark:text-on-dark-soft leading-relaxed">
+                    {description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        </AnimatedSection>
+
+        {/* Education */}
+        <AnimatedSection delay={0.16}>
+          <section className="mb-16">
+            <SectionHeading title="Education" />
+            <div className="flex items-start gap-4 bg-surface-card dark:bg-surface-dark-elevated rounded-xl p-8 border border-hairline dark:border-surface-dark-soft">
+              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                <GraduationCap size={18} />
+              </div>
+              <div>
+                <h3 className="text-title-sm font-[500] text-ink dark:text-on-dark">
+                  Bachelor of Science — Computer Science
+                </h3>
+                <p className="text-body-sm text-primary font-[500] mt-0.5">
+                  University of British Columbia
+                </p>
+                <p className="text-caption text-muted dark:text-on-dark-soft mt-0.5">2022 – Present</p>
+              </div>
+            </div>
+          </section>
+        </AnimatedSection>
+
+        {/* CTA — callout-card-coral */}
+        <AnimatedSection delay={0.2}>
+          <div className="bg-primary rounded-2xl px-10 py-12 text-center">
+            <h2 className="font-display text-display-sm font-[500] text-white mb-3">
+              Want to work together?
+            </h2>
+            <p className="text-body-md text-white/80 mb-7">
+              I&apos;m open to freelance projects and full-time opportunities.
+            </p>
+            {/* Inverted button on coral: cream/white background */}
+            <a
+              href="/contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white/15 hover:bg-white/25 text-white text-body-sm font-[500] transition-colors"
+            >
+              Get in touch
+              <ArrowRight size={14} />
+            </a>
+          </div>
+        </AnimatedSection>
+      </div>
     </main>
   )
 }

@@ -7,18 +7,25 @@
     scroll-behavior: smooth;
   }
 
+  /* Warm cream canvas — the brand's defining surface choice */
   body {
-    @apply bg-white text-gray-900 antialiased;
-    @apply dark:bg-gray-950 dark:text-gray-50;
+    @apply bg-canvas text-ink antialiased font-sans;
+    @apply dark:bg-surface-dark dark:text-on-dark;
   }
 
   *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-indigo-600;
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+
+  /* Hairline borders inherit warm tones */
+  hr {
+    @apply border-hairline dark:border-surface-dark-elevated;
   }
 }
 
 @layer utilities {
+  /* section-padding matches DESIGN.md spacing.section = 96px (py-24) */
   .section-padding {
-    @apply py-20 lg:py-28;
+    @apply py-24;
   }
 }

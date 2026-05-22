@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { AnimatedSection } from '@/components/ui/AnimatedSection'
-import { SectionHeading } from '@/components/ui/SectionHeading'
 import { ProjectGrid } from '@/components/projects/ProjectGrid'
 import { client } from '@/sanity/lib/client'
 import { getAllProjects } from '@/sanity/lib/queries'
@@ -22,14 +21,23 @@ export default async function ProjectsPage() {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-      <AnimatedSection>
-        <SectionHeading
-          title="All Projects"
-          subtitle={`${projects.length} project${projects.length !== 1 ? 's' : ''} — development, design, and everything in between`}
-        />
-      </AnimatedSection>
-      <ProjectGrid projects={projects} />
+    <main className="bg-canvas dark:bg-surface-dark min-h-screen">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 py-16 lg:py-24">
+        <AnimatedSection>
+          <div className="mb-12">
+            <span className="text-caption-xs font-[500] uppercase tracking-[0.1em] text-primary mb-5 block">
+              Work
+            </span>
+            <h1 className="font-display text-display-lg font-[500] text-ink dark:text-on-dark mb-4">
+              All Projects
+            </h1>
+            <p className="text-body-md text-body-text dark:text-on-dark-soft">
+              {projects.length} project{projects.length !== 1 ? 's' : ''} — development, design, and everything in between
+            </p>
+          </div>
+        </AnimatedSection>
+        <ProjectGrid projects={projects} />
+      </div>
     </main>
   )
 }

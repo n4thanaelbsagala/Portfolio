@@ -7,14 +7,19 @@ interface SectionHeadingProps {
   className?: string
 }
 
+// display-md: 36px serif, weight 500, lineHeight 1.15, tracking -0.015em
+// subtitle: body-md sans, muted color
 export function SectionHeading({ title, subtitle, centered = false, className }: SectionHeadingProps) {
   return (
     <div className={cn('mb-12', centered && 'text-center', className)}>
-      <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white tracking-tight">
+      <h2 className="font-display text-display-md font-[500] text-ink dark:text-on-dark">
         {title}
       </h2>
       {subtitle && (
-        <p className="mt-3 text-lg text-gray-500 dark:text-gray-400 max-w-2xl">
+        <p className={cn(
+          'mt-3 text-body-md text-muted dark:text-on-dark-soft max-w-2xl',
+          centered && 'mx-auto',
+        )}>
           {subtitle}
         </p>
       )}
