@@ -1,52 +1,49 @@
-# CLAUDE.md
+# Portfolio — Claude Instructions
 
-## Project overview
+## Stack
+- Next.js 14+ App Router with TypeScript strict mode
+- Tailwind CSS only — no inline styles, no CSS modules
+- Sanity v3 CMS with GROQ queries via next-sanity
+- Framer Motion for animations
+- Resend for contact form emails via API route
 
-Personal portfolio — Next.js 14 App Router, TypeScript strict, Tailwind CSS, Sanity v3 CMS, Resend for email.
+## Architecture rules
+- All CMS data fetching must happen in Server Components only
+  — never fetch Sanity content from the client side
+- GROQ queries live exclusively in /sanity/lib/queries.ts
+  — never write raw GROQ strings inside page or component files
+- All shared TypeScript interfaces live in /lib/types.ts
+- Reusable UI pieces go in /components/ui — never duplicate 
+  button or heading styles across components
+- API route logic (validation, email sending) stays in 
+  /app/api/contact/route.ts — no business logic in components
+
+## Styling rules
+- Tailwind utility classes only — no arbitrary values unless 
+  absolutely necessary
+- dark: utilities for all color-sensitive properties
+- Mobile-first — always write base styles before md:/lg: overrides
+- One accent color throughout (defined in tailwind.config.ts 
+  as "accent") — never hardcode the hex elsewhere
+
+## What to never do
+- Never add client-side data fetching for Sanity content
+- Never install new packages without asking first
+- Never put environment variables in code — use .env.local only
+- Never use SANITY_API_TOKEN on the client side (it's server only)
+- Never skip TypeScript types — every prop and return value 
+  must be typed
 
 ## Commands
+- Dev server:    npm run dev
+- Type check:    npx tsc --noEmit
+- Lint:          npm run lint
+- Tests:         npx jest
+- Sanity studio: visit localhost:3000/studio
+- Deploy:        push to GitHub → auto-deploys via Vercel
 
-```bash
-npm run dev     # Dev server on :3000
-npm run build   # Production build (must pass before merging)
-npm run lint    # ESLint
-npm test        # Jest
-```
-
-## Architecture
-
-- **Route groups** — `app/(main)/` has Navbar + Footer via its own layout; `app/studio/` renders Sanity Studio without site chrome
-- **Data fetching** — all CMS fetches happen in Server Components via `@/sanity/lib/client.ts`; no client-side SWR or React Query
-- **State** — React built-in only (`useState`, `useContext`). No Redux, Zustand, etc.
-- **Styling** — Tailwind only; no CSS modules, no styled-components. Accent colour is `#4F46E5` (Tailwind `indigo-600`)
-- **Dark mode** — `next-themes` with `class` attribute strategy; toggle lives in `Navbar.tsx`
-
-## Key files
-
-| Path | Purpose |
-|---|---|
-| `lib/types.ts` | All shared TS types + `Category` enum |
-| `sanity/lib/queries.ts` | All GROQ queries |
-| `sanity/lib/image.ts` | `urlFor()` helper for `@sanity/image-url` |
-| `sanity/schemaTypes/project.ts` | The single Sanity document type |
-| `app/api/contact/route.ts` | POST handler; validates input, rate-limits, sends via Resend |
-
-## Adding a new page
-
-1. Create `app/(main)/your-route/page.tsx`
-2. Export a `metadata` object for SEO
-3. Add the link to `components/layout/Navbar.tsx` `navLinks` array and `Footer.tsx` `footerLinks` array
-
-## Environment variables
-
-All listed in `.env.local`. `SANITY_API_TOKEN` is server-side only (no `NEXT_PUBLIC_` prefix). Never commit `.env.local`.
-
-## Sanity content
-
-- Add/edit projects at `/studio`
-- Mark `featured: true` on a project to include it in the homepage grid
-- `revalidate = 60` on `/projects` page; individual project pages use `generateStaticParams` + `revalidate`
-
-## Testing
-
-Tests live in `__tests__/` or co-located as `*.test.tsx`. Run with `npm test`. Uses Jest + React Testing Library + `jest-environment-jsdom`.
+## Vercel deployment checklist
+1. Connect GitHub repo to Vercel
+2. Add all .env.local variables to Vercel environment variables
+3. Sanity CORS: add the Vercel production URL in Sanity project 
+   settings under API → CORS origins
